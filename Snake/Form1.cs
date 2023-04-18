@@ -7,7 +7,7 @@ namespace Snake
         {
             InitializeComponent();
             Graphics g = panel1.CreateGraphics();
-            _controller = new GameController(g);
+            _controller = new GameController(panel1.Size);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -33,6 +33,34 @@ namespace Snake
                 snakeTimer.Stop();
             }
             _controller.PaintScene(panel1.CreateGraphics());
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyData)
+            {
+                case Keys.Left:
+                {
+                    _controller.TurnSnake(Direction.Left);
+                    break;
+                }
+                case Keys.Right:
+                {
+                    _controller.TurnSnake(Direction.Right);
+                        break;
+                }
+                case Keys.Up:
+                {
+                    _controller.TurnSnake(Direction.Top);
+                    break;
+                }
+                case Keys.Down:
+                {
+                    _controller.TurnSnake(Direction.Bottom);
+                    break;
+                }
+            }
+            
         }
     }
 }

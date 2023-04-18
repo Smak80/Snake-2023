@@ -11,20 +11,14 @@ namespace Snake
         private Field _f = new Field();
         private FieldView _view;
         public Field F => _f;
-        public Graphics MainGraphics
+        
+        public FieldController(SizeF containerSize)
         {
-            get => _view.MainGraphics;
-            set => _view.MainGraphics = value;
+            _view = new FieldView(containerSize, _f);
         }
-
-        public FieldController(Graphics g)
+        public void Paint(Graphics g)
         {
-            _view = new FieldView(_f, g);
-            MainGraphics = g;
-        }
-        public void Paint()
-        {
-            _view.Paint();
+            _view.Paint(g);
         }
     }
 }

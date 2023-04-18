@@ -11,23 +11,10 @@ namespace Snake
         private FieldController _fieldController;
         private SnakeController _snakeController;
 
-        private Graphics _mainG;
-
-        public Graphics MainGraphics
+        public GameController(SizeF containerSize)
         {
-            get => _mainG;
-            set
-            {
-                _mainG = value;
-                _fieldController.MainGraphics = value;
-                _snakeController.MainGraphics = value;
-            }
-        }
-
-        public GameController(Graphics mainGraphics)
-        {
-            _fieldController = new FieldController(mainGraphics);
-            _snakeController = new SnakeController(_fieldController.F, mainGraphics);
+            _fieldController = new FieldController(containerSize);
+            _snakeController = new SnakeController(containerSize, _fieldController.F);
         }
 
         public void PaintScene(Graphics g)
@@ -36,9 +23,8 @@ namespace Snake
                 g,
                 Rectangle.Round(g.VisibleClipBounds)
             );
-            MainGraphics = bg.Graphics;
-            _fieldController.Paint();
-            _snakeController.Paint();
+            _fieldController.Paint(bg.Graphics);
+            _snakeController.Paint(bg.Graphics);
             bg.Render();
         }
 
@@ -46,6 +32,10 @@ namespace Snake
         {
             return _snakeController.Move();
         }
-        
+
+        public void TurnSnake(Direction way)
+        {
+            _snakeController.Turn(way);
+        }
     }
 }

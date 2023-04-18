@@ -8,19 +8,19 @@ namespace Snake
 {
     public class FieldView : GameView
     {
-        public FieldView(Field f, Graphics g) : base(g, f) { }
+        public FieldView(SizeF containerSize, Field f) : base(containerSize, f) { }
 
-        public void Paint()
+        public void Paint(Graphics g)
         {
-            MainGraphics.Clear(Color.White);
+            g.Clear(Color.White);
             Brush emptyCellBrush = new SolidBrush(Color.Teal);
             Pen borderPen = new Pen(Color.Black);
             for (int i = 0; i < _f.RowCount; i++)
             {
                 for (int j = 0; j < _f.ColumnCount; j++)
                 {
-                    MainGraphics.FillRectangle(emptyCellBrush, GetCellRect(i, j));
-                    MainGraphics.DrawRectangle(borderPen, GetCellRect(i, j));
+                    g.FillRectangle(emptyCellBrush, GetCellRect(i, j));
+                    g.DrawRectangle(borderPen, GetCellRect(i, j));
                 }
             }
         }

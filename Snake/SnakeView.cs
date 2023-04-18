@@ -11,7 +11,7 @@ namespace Snake
     {
         private Snake _s;
         
-        public SnakeView(Snake s, Graphics g) : base(g, s.F)
+        public SnakeView(SizeF containerSize, Snake s) : base(containerSize, s.F)
         {
             _s = s;
         }
@@ -33,7 +33,7 @@ namespace Snake
                 case Direction.Right:
                 {
                     tongueR = new RectangleF(
-                        cellRect.X + cellRect.Width - 4, 
+                        cellRect.X + cellRect.Width - 6, 
                         cellRect.Y + cellRect.Height / 2 - 1,
                         6, 0
                     );
@@ -52,7 +52,7 @@ namespace Snake
                 {
                     tongueR = new RectangleF(
                         cellRect.X + cellRect.Width / 2,
-                        cellRect.Y + cellRect.Height - 4,
+                        cellRect.Y + cellRect.Height - 6,
                         0, 6
                     );
                     break;
@@ -61,7 +61,7 @@ namespace Snake
             return tongueR;
         }
 
-        public void Paint()
+        public void Paint(Graphics g)
         {
             Brush sb = new SolidBrush(Color.DarkGoldenrod);
             Pen sp = new Pen(Color.SaddleBrown, 2);
@@ -99,13 +99,13 @@ namespace Snake
                             break;
                         }
                     }
-                    MainGraphics.FillEllipse(sb, GetCellRect(row, col, 6));
-                    MainGraphics.DrawEllipse(sp, GetCellRect(row, col, 6));
+                    g.FillEllipse(sb, GetCellRect(row, col, 6));
+                    g.DrawEllipse(sp, GetCellRect(row, col, 6));
                     if (head)
                     {
                         head = false;
                         var tr = GetTonguePosition(row, col, snakePart.Way);
-                        MainGraphics.DrawLine(
+                        g.DrawLine(
                             tp, tr.X, tr.Y, tr.X + tr.Width, tr.Y + tr.Height
                         );
                     }

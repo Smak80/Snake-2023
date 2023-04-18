@@ -10,25 +10,23 @@ namespace Snake
     {
         private Snake snake;
         private SnakeView snakeView;
-
-        public Graphics MainGraphics
-        {
-            get => snakeView.MainGraphics; set => snakeView.MainGraphics = value;
-        }
-        public SnakeController(Field f, Graphics g)
+        
+        public SnakeController(SizeF containerSize, Field f)
         {
             snake = new Snake(f);
-            snakeView = new SnakeView(snake, g);
+            snakeView = new SnakeView(containerSize, snake);
         }
 
-
-
-        public void Paint()
+        public void Paint(Graphics g)
         {
-            snakeView.Paint();
+            snakeView.Paint(g);
         }
 
         public bool Move() => snake.Move();
-        
+
+        public void Turn(Direction way)
+        {
+            snake.Turn(way);
+        }
     }
 }

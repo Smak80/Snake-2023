@@ -8,16 +8,14 @@ namespace Snake
 {
     public abstract class GameView
     {
-        private Graphics _g;
+        //private Graphics _g;
         protected Field _f;
-        public Graphics MainGraphics
-        {
-            get => _g; set => _g = value;
-        }
+        public SizeF ContainerSize { get; set; }
 
-        public GameView(Graphics g, Field f)
+        public GameView(SizeF containerSize, Field f)
         {
-            MainGraphics = g;
+            //MainGraphics = g;
+            ContainerSize = containerSize;
             _f = f;
         }
 
@@ -25,8 +23,8 @@ namespace Snake
         {
             get
             {
-                var maxCellWidth = MainGraphics.VisibleClipBounds.Width / _f.ColumnCount;
-                var maxCellHeight = MainGraphics.VisibleClipBounds.Height / _f.RowCount;
+                var maxCellWidth = ContainerSize.Width / _f.ColumnCount;
+                var maxCellHeight = ContainerSize.Height / _f.RowCount;
                 return Math.Min(maxCellWidth, maxCellHeight);
             }
         }
@@ -34,8 +32,8 @@ namespace Snake
         {
             get
             {
-                var w = MainGraphics.VisibleClipBounds.Width - CellSize * _f.ColumnCount;
-                var h = MainGraphics.VisibleClipBounds.Height - CellSize * _f.RowCount;
+                var w = ContainerSize.Width - CellSize * _f.ColumnCount;
+                var h = ContainerSize.Height - CellSize * _f.RowCount;
                 return new RectangleF(
                     w / 2, h / 2,
                     CellSize * _f.ColumnCount,

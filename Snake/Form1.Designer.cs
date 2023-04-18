@@ -57,6 +57,7 @@
             Controls.Add(panel1);
             Name = "Form1";
             Text = "Змейка";
+            KeyDown += Form1_KeyDown;
             ResumeLayout(false);
         }
 
