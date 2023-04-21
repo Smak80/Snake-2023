@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snake
 {
+    public delegate void AteDelegate();
     public class GameController
     {
         private FieldController _fieldController;
@@ -13,6 +14,7 @@ namespace Snake
         private FoodController _foodController;
 
         private SizeF _containerSize;
+        public event AteDelegate EatFood;
         public SizeF ControllerSize
         {
             get => _containerSize;
@@ -48,7 +50,11 @@ namespace Snake
         {
             var moveResult =  _snakeController.Move();
             var ateResult = _foodController.TryEat();
-            if (ateResult) _snakeController.GrowSnake();
+            if (ateResult)
+            {
+                _snakeController.GrowSnake();
+                if (EatFood != null) EatFood();
+            }
             return moveResult;
         }
 

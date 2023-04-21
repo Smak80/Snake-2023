@@ -7,6 +7,12 @@ namespace Snake
         {
             InitializeComponent();
             _controller = new GameController(panel1.Size);
+            _controller.EatFood += ControllerOnEatFood;
+        }
+
+        private void ControllerOnEatFood()
+        {
+            snakeTimer.Interval -= 10;
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
