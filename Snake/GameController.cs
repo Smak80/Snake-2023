@@ -10,11 +10,26 @@ namespace Snake
     {
         private FieldController _fieldController;
         private SnakeController _snakeController;
+        private FoodController _foodController;
+
+        private SizeF _containerSize;
+        public SizeF ControllerSize
+        {
+            get => _containerSize;
+            set
+            {
+                _containerSize = value;
+                _fieldController.ContainerSize = value;
+                _snakeController.ContainerSize = value;
+                _foodController.ContainerSize = value;
+            }
+        }
 
         public GameController(SizeF containerSize)
         {
             _fieldController = new FieldController(containerSize);
             _snakeController = new SnakeController(containerSize, _fieldController.F);
+            _foodController = new FoodController(containerSize, _fieldController.F, _snakeController.Snake);
         }
 
         public void PaintScene(Graphics g)
@@ -25,12 +40,16 @@ namespace Snake
             );
             _fieldController.Paint(bg.Graphics);
             _snakeController.Paint(bg.Graphics);
+            _foodController.Paint(bg.Graphics);
             bg.Render();
         }
 
         public bool NextStep()
         {
-            return _snakeController.Move();
+            var moveResult =  _snakeController.Move();
+            var ateResult = _foodController.TryEat();
+            if (ateResult) _snakeController.GrowSnake();
+            return moveResult;
         }
 
         public void TurnSnake(Direction way)

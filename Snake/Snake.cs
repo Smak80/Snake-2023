@@ -10,8 +10,13 @@ namespace Snake
     {
         private Field _f;
         private Random rnd = new ();
+        private bool shouldGrow = false;
         public List<SnakePart> Parts => new List<SnakePart>(SnakePart._parts);
         public Field F => _f;
+
+        public int HeadRow => Parts[0].StartRow;
+        public int HeadCol => Parts[0].StartCol;
+
         public Snake(Field f)
         {
             _f = f;
@@ -27,10 +32,11 @@ namespace Snake
         {
             foreach (var snakePart in Parts)
             {
-                var res = snakePart.Move();
+                var res = snakePart.Move(shouldGrow);
                 if (res == false) return false;
             }
-            return true;
+            shouldGrow = false;
+            return !Contains(HeadRow, HeadCol, false);
         }
 
         public void Turn(Direction way)
@@ -55,6 +61,51 @@ namespace Snake
               || (currentWay == Direction.Right && way == Direction.Left)
               || (currentWay == Direction.Top && way == Direction.Bottom)
               || (currentWay == Direction.Bottom && way == Direction.Top));
+        }
+
+        public bool Contains(int row, int col, bool includeHead = true)
+        {
+            var head = true;
+            foreach (var snakePart in Parts)
+            {
+                for (int i = 0; i < snakePart.Length; i++)
+                {
+                    if (head && i == 0 && !includeHead)
+                    {
+                        head = false;
+                        continue;
+                    } 
+                    switch (snakePart.Way)
+                    {
+                        case Direction.Left:
+                        {
+                            if (row == snakePart.StartRow && col == snakePart.StartCol + i) return true;
+                            break;
+                        }
+                        case Direction.Right:
+                        {
+                            if (row == snakePart.StartRow && col == snakePart.StartCol - i) return true;
+                            break;
+                        }
+                        case Direction.Top:
+                        {
+                            if (row == snakePart.StartRow + i && col == snakePart.StartCol) return true;
+                            break;
+                        }
+                        case Direction.Bottom:
+                        {
+                            if (row == snakePart.StartRow - i && col == snakePart.StartCol) return true;
+                            break;
+                        }
+                    }
+                }   
+            }
+            return false;
+        }
+
+        public void Grow()
+        {
+            shouldGrow = true;
         }
     }
 
@@ -90,7 +141,7 @@ namespace Snake
             get => _way; set => _way = value;
         }
 
-        public bool Move()
+        public bool Move(bool shouldGrow)
         {
             var partIndex = _parts.FindIndex((prt) => prt == this);
             switch (Way)
@@ -136,11 +187,18 @@ namespace Snake
             {
                 length++;
             }
+            
+            if (partIndex == _parts.Count - 1 && shouldGrow)
+            {
+                length++;
+            }
+
             if (partIndex != 0 && partIndex == _parts.Count - 1)
             {
                 length--;
                 if (length == 0) _parts.Remove(this);
             }
+            
             return true;
         }
     }

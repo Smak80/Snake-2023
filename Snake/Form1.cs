@@ -6,16 +6,16 @@ namespace Snake
         public Form1()
         {
             InitializeComponent();
-            Graphics g = panel1.CreateGraphics();
             _controller = new GameController(panel1.Size);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            _controller.PaintScene(e.Graphics);
+            _controller.PaintScene(panel1.CreateGraphics());
         }
         private void panel1_SizeChanged(object sender, EventArgs e)
         {
+            _controller.ControllerSize = panel1.Size;
             panel1.Invalidate();
         }
 

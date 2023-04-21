@@ -6,11 +6,23 @@ using System.Threading.Tasks;
 
 namespace Snake
 {
+
     public class SnakeController
     {
         private Snake snake;
         private SnakeView snakeView;
-        
+
+        public SizeF ContainerSize
+        {
+            get => snakeView.ContainerSize;
+            set => snakeView.ContainerSize = value;
+        }
+
+        public Snake Snake
+        {
+            get => snake;
+        }
+
         public SnakeController(SizeF containerSize, Field f)
         {
             snake = new Snake(f);
@@ -28,5 +40,7 @@ namespace Snake
         {
             snake.Turn(way);
         }
+
+        public void GrowSnake() => snake.Grow();
     }
 }

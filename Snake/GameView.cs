@@ -8,7 +8,6 @@ namespace Snake
 {
     public abstract class GameView
     {
-        //private Graphics _g;
         protected Field _f;
         public SizeF ContainerSize { get; set; }
 

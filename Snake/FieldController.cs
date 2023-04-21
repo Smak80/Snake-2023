@@ -11,6 +11,12 @@ namespace Snake
         private Field _f = new Field();
         private FieldView _view;
         public Field F => _f;
+
+        public SizeF ContainerSize
+        {
+            get => _view.ContainerSize;
+            set => _view.ContainerSize = value;
+        }
         
         public FieldController(SizeF containerSize)
         {
