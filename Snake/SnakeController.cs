@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Snake
 {
-
     public class SnakeController
     {
         private Snake snake;

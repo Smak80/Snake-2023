@@ -20,7 +20,7 @@ namespace Snake
         public Snake(Field f)
         {
             _f = f;
-            SnakePart prt = new SnakePart(_f);
+            SnakePart prt = new SnakePart();
             prt.Length = 3;
             prt.StartRow = rnd.Next (4, _f.RowCount - 5);
             prt.StartCol = rnd.Next(4, _f.ColumnCount - 5);
@@ -32,18 +32,21 @@ namespace Snake
         {
             foreach (var snakePart in Parts)
             {
-                var res = snakePart.Move(shouldGrow);
-                if (res == false) return false;
+                snakePart.Move(shouldGrow);
             }
             shouldGrow = false;
-            return !Contains(HeadRow, HeadCol, false);
+            return    HeadRow >= 0 
+                   && HeadRow <  _f.RowCount 
+                   && HeadCol >= 0 
+                   && HeadCol <  _f.ColumnCount
+                   && !Contains(HeadRow, HeadCol, false);
         }
 
         public void Turn(Direction way)
         {
             if (IsValidTurn(way))
             {
-                SnakePart._parts.Insert(0, new SnakePart(_f)
+                SnakePart._parts.Insert(0, new SnakePart()
                 {
                     Length = 0,
                     StartCol = Parts[0].StartCol,
@@ -115,12 +118,7 @@ namespace Snake
         private int startCol;
         private int length = 1;
         private Direction _way;
-        private Field _f;
         internal static List<SnakePart> _parts = new();
-        public SnakePart(Field f)
-        {
-            _f = f;
-        }
         public int StartRow
         {
             get => startRow; set => startRow = value;
@@ -141,65 +139,43 @@ namespace Snake
             get => _way; set => _way = value;
         }
 
-        public bool Move(bool shouldGrow)
+        public void Move(bool shouldGrow)
         {
             var partIndex = _parts.FindIndex((prt) => prt == this);
-            switch (Way)
+            if (partIndex == 0)
             {
-                case Direction.Left:
+                switch (Way)
                 {
-                    if (partIndex == 0)
+                    case Direction.Left:
                     {
-                        if (startCol == 0) return false;
                         startCol--;
+                        break;
                     }
-                    break;
-                }
-                case Direction.Right:
-                {
-                    if (partIndex == 0)
+                    case Direction.Right:
                     {
-                        if (startCol == _f.ColumnCount - 1) return false;
                         startCol++;
+                        break;
                     }
-                    break;
-                }
-                case Direction.Top:
-                {
-                    if (partIndex == 0)
+                    case Direction.Top:
                     {
-                        if (startRow == 0) return false;
                         startRow--;
+                        break;
                     }
-                    break;
-                }
-                default:
-                {
-                    if (partIndex == 0)
+                    default:
                     {
-                        if (startRow == _f.RowCount - 1) return false;
                         startRow++;
+                        break;
                     }
-                    break;
                 }
+                if (_parts.Count > 1) length++;
             }
-            if (partIndex == 0 && _parts.Count > 1)
-            {
-                length++;
-            }
+            if (partIndex == _parts.Count - 1 && shouldGrow) length++;
             
-            if (partIndex == _parts.Count - 1 && shouldGrow)
-            {
-                length++;
-            }
-
             if (partIndex != 0 && partIndex == _parts.Count - 1)
             {
                 length--;
                 if (length == 0) _parts.Remove(this);
             }
-            
-            return true;
         }
     }
 

@@ -12,7 +12,7 @@ namespace Snake
 
         private void ControllerOnEatFood()
         {
-            snakeTimer.Interval -= 10;
+            snakeTimer.Interval -= 15;
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

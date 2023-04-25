@@ -99,15 +99,19 @@ namespace Snake
                             break;
                         }
                     }
-                    g.FillEllipse(sb, GetCellRect(row, col, 6));
-                    g.DrawEllipse(sp, GetCellRect(row, col, 6));
-                    if (head)
+
+                    if (row >= 0 && col >= 0 && row < _s.F.RowCount && col < _s.F.ColumnCount)
                     {
-                        head = false;
-                        var tr = GetTonguePosition(row, col, snakePart.Way);
-                        g.DrawLine(
-                            tp, tr.X, tr.Y, tr.X + tr.Width, tr.Y + tr.Height
-                        );
+                        g.FillEllipse(sb, GetCellRect(row, col, 6));
+                        g.DrawEllipse(sp, GetCellRect(row, col, 6));
+                        if (head)
+                        {
+                            head = false;
+                            var tr = GetTonguePosition(row, col, snakePart.Way);
+                            g.DrawLine(
+                                tp, tr.X, tr.Y, tr.X + tr.Width, tr.Y + tr.Height
+                            );
+                        }
                     }
                 }
             }

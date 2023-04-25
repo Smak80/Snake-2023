@@ -37,7 +37,7 @@ namespace Snake
             if (_s.HeadRow == _food[0].Row
                 && _s.HeadCol == _food[0].Col)
             {
-                _food.Clear();//
+                _food.Clear(); //
                 CookNew();
                 return true;
             }
