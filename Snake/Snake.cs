@@ -41,6 +41,7 @@ namespace Snake
                    && HeadCol >= 0 
                    && HeadCol <  _f.ColumnCount
                    && !Contains(HeadRow, HeadCol, false);
+            if (!IsAlive) Parts[Parts.Count - 1].Length++;
             return IsAlive;
         }
 
