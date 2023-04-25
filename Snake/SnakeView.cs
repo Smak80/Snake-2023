@@ -63,9 +63,9 @@ namespace Snake
 
         public void Paint(Graphics g)
         {
-            Brush sb = new SolidBrush(Color.DarkGoldenrod);
-            Pen sp = new Pen(Color.SaddleBrown, 2);
-            Pen tp = new Pen(Color.Red, 2);
+            Brush sb = new SolidBrush(_s.IsAlive ? Color.DarkGoldenrod: Color.DarkBlue);
+            Pen sp = new Pen(_s.IsAlive ? Color.SaddleBrown: Color.White, 2);
+            Pen tp = new Pen(_s.IsAlive ? Color.Red: Color.LightSeaGreen, 2);
             bool head = true;
             foreach (var snakePart in _s.Parts)
             {
@@ -102,8 +102,14 @@ namespace Snake
 
                     if (row >= 0 && col >= 0 && row < _s.F.RowCount && col < _s.F.ColumnCount)
                     {
-                        g.FillEllipse(sb, GetCellRect(row, col, 6));
-                        g.DrawEllipse(sp, GetCellRect(row, col, 6));
+                        var rect6 = GetCellRect(row, col, 6);
+                        g.FillEllipse(sb, rect6);
+                        g.DrawEllipse(sp, rect6);
+                        if (!_s.IsAlive)
+                        {
+                            g.DrawLine(tp, rect6.X, rect6.Y, rect6.X+rect6.Width, rect6.Y+rect6.Height);
+                            g.DrawLine(tp, rect6.X, rect6.Y + rect6.Height, rect6.X + rect6.Width, rect6.Y);
+                        }
                         if (head)
                         {
                             head = false;

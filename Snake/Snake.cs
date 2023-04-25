@@ -11,6 +11,7 @@ namespace Snake
         private Field _f;
         private Random rnd = new ();
         private bool shouldGrow = false;
+        public bool IsAlive { get; private set; } = true;
         public List<SnakePart> Parts => new List<SnakePart>(SnakePart._parts);
         public Field F => _f;
 
@@ -35,11 +36,12 @@ namespace Snake
                 snakePart.Move(shouldGrow);
             }
             shouldGrow = false;
-            return    HeadRow >= 0 
+            IsAlive = HeadRow >= 0 
                    && HeadRow <  _f.RowCount 
                    && HeadCol >= 0 
                    && HeadCol <  _f.ColumnCount
                    && !Contains(HeadRow, HeadCol, false);
+            return IsAlive;
         }
 
         public void Turn(Direction way)
