@@ -13,6 +13,7 @@ namespace Snake
         private void ControllerOnEatFood()
         {
             snakeTimer.Interval -= 15;
+            label2.Text = $"{_controller.Snake.Length + 1}";
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -46,27 +47,27 @@ namespace Snake
             switch (e.KeyData)
             {
                 case Keys.Left:
-                {
-                    _controller.TurnSnake(Direction.Left);
-                    break;
-                }
-                case Keys.Right:
-                {
-                    _controller.TurnSnake(Direction.Right);
+                    {
+                        _controller.TurnSnake(Direction.Left);
                         break;
-                }
+                    }
+                case Keys.Right:
+                    {
+                        _controller.TurnSnake(Direction.Right);
+                        break;
+                    }
                 case Keys.Up:
-                {
-                    _controller.TurnSnake(Direction.Top);
-                    break;
-                }
+                    {
+                        _controller.TurnSnake(Direction.Top);
+                        break;
+                    }
                 case Keys.Down:
-                {
-                    _controller.TurnSnake(Direction.Bottom);
-                    break;
-                }
+                    {
+                        _controller.TurnSnake(Direction.Bottom);
+                        break;
+                    }
             }
-            
+
         }
     }
 }

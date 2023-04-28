@@ -27,6 +27,8 @@ namespace Snake
             }
         }
 
+        public Snake Snake => _snakeController.Snake;
+
         public GameController(SizeF containerSize)
         {
             _fieldController = new FieldController(containerSize);

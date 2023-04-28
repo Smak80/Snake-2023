@@ -14,10 +14,13 @@ namespace Snake
         public bool IsAlive { get; private set; } = true;
         public List<SnakePart> Parts => new List<SnakePart>(SnakePart._parts);
         public Field F => _f;
-
+        public int Length
+        {
+            get => Parts.Sum(p => p.Length) - 3;
+        }
         public int HeadRow => Parts[0].StartRow;
         public int HeadCol => Parts[0].StartCol;
-
+        
         public Snake(Field f)
         {
             _f = f;
