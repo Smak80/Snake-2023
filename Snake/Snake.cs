@@ -14,11 +14,8 @@ namespace Snake
         public bool IsAlive { get; private set; } = true;
         public List<SnakePart> Parts => new List<SnakePart>(SnakePart._parts);
         public Field F => _f;
-        public int Length
-        {
-            get => Parts.Sum(p => p.Length) - 3;
-        }
-        public int HeadRow => Parts[0].StartRow;
+        public int Length => Parts.Sum(p => p.Length);
+            public int HeadRow => Parts[0].StartRow;
         public int HeadCol => Parts[0].StartCol;
         
         public Snake(Field f)
@@ -64,13 +61,14 @@ namespace Snake
 
         private bool IsValidTurn(Direction way)
         {
-            if (Parts[0].Length == 0) return false;
-            var currentWay = Parts[0].Way;
+            if (SnakePart._parts[0].Length == 0) SnakePart._parts.RemoveAt(0);
+            var currentWay = SnakePart._parts[0].Way;
             if (currentWay == way) return false;
-            return !((currentWay == Direction.Left && way == Direction.Right)
+            var res = !((currentWay == Direction.Left && way == Direction.Right)
               || (currentWay == Direction.Right && way == Direction.Left)
               || (currentWay == Direction.Top && way == Direction.Bottom)
               || (currentWay == Direction.Bottom && way == Direction.Top));
+            return res;
         }
 
         public bool Contains(int row, int col, bool includeHead = true)

@@ -61,7 +61,6 @@
             label1.Size = new Size(36, 15);
             label1.TabIndex = 1;
             label1.Text = "Очки";
-            label1.Click += label1_Click;
             // 
             // label2
             // 
@@ -72,7 +71,6 @@
             label2.Size = new Size(13, 15);
             label2.TabIndex = 2;
             label2.Text = "0";
-            label2.Click += label2_Click;
             // 
             // Form1
             // 

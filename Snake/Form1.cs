@@ -19,7 +19,6 @@ namespace Snake
         private void ControllerOnEatFood()
         {
             snakeTimer.Interval -= 15;
-            //label2.Text = (_controller.Snake.Length - 2).ToString();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -73,7 +72,6 @@ namespace Snake
                         break;
                     }
             }
-
         }
     }
 }
