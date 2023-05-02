@@ -18,6 +18,8 @@ namespace Snake
         public int HeadRow => Parts[0].StartRow;
         public int HeadCol => Parts[0].StartCol;
 
+        public int Length => Parts.Sum(p => p.Length);
+
         public Snake(Field f)
         {
             _f = f;
@@ -61,7 +63,8 @@ namespace Snake
 
         private bool IsValidTurn(Direction way)
         {
-            var currentWay = (Parts[0].Length > 0) ? Parts[0].Way : Parts[1].Way;
+            if (Parts[0].Length == 0) return false;
+            var currentWay = Parts[0].Way;
             if (currentWay == way) return false;
             return !((currentWay == Direction.Left && way == Direction.Right)
               || (currentWay == Direction.Right && way == Direction.Left)

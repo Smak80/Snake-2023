@@ -8,11 +8,18 @@ namespace Snake
             InitializeComponent();
             _controller = new GameController(panel1.Size);
             _controller.EatFood += ControllerOnEatFood;
+            _controller.Grow += ControllerOnGrow;
+        }
+
+        private void ControllerOnGrow(int length)
+        {
+            label2.Text = (length-3).ToString();
         }
 
         private void ControllerOnEatFood()
         {
             snakeTimer.Interval -= 15;
+            //label2.Text = (_controller.Snake.Length - 2).ToString();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
@@ -46,27 +53,37 @@ namespace Snake
             switch (e.KeyData)
             {
                 case Keys.Left:
-                {
-                    _controller.TurnSnake(Direction.Left);
-                    break;
-                }
-                case Keys.Right:
-                {
-                    _controller.TurnSnake(Direction.Right);
+                    {
+                        _controller.TurnSnake(Direction.Left);
                         break;
-                }
+                    }
+                case Keys.Right:
+                    {
+                        _controller.TurnSnake(Direction.Right);
+                        break;
+                    }
                 case Keys.Up:
-                {
-                    _controller.TurnSnake(Direction.Top);
-                    break;
-                }
+                    {
+                        _controller.TurnSnake(Direction.Top);
+                        break;
+                    }
                 case Keys.Down:
-                {
-                    _controller.TurnSnake(Direction.Bottom);
-                    break;
-                }
+                    {
+                        _controller.TurnSnake(Direction.Bottom);
+                        break;
+                    }
             }
-            
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

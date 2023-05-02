@@ -7,14 +7,21 @@ using System.Threading.Tasks;
 namespace Snake
 {
     public delegate void AteDelegate();
+    public delegate void GrowDelegate(int length);
+
+
     public class GameController
     {
+        private bool _shouldGrow = false;
         private FieldController _fieldController;
         private SnakeController _snakeController;
         private FoodController _foodController;
 
         private SizeF _containerSize;
         public event AteDelegate EatFood;
+        public event GrowDelegate Grow;
+        
+        //public Snake Snake => _snakeController.Snake;
         public SizeF ControllerSize
         {
             get => _containerSize;
@@ -50,10 +57,17 @@ namespace Snake
         {
             var moveResult =  _snakeController.Move();
             var ateResult = _foodController.TryEat();
+            if (_shouldGrow)
+            {
+                _shouldGrow = false;
+                Grow(_snakeController.Snake.Length);
+            }
             if (ateResult)
             {
                 _snakeController.GrowSnake();
                 if (EatFood != null) EatFood();
+                _shouldGrow = true;
+                
             }
             return moveResult;
         }
