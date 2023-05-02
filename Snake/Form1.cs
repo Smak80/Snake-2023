@@ -8,12 +8,18 @@ namespace Snake
             InitializeComponent();
             _controller = new GameController(panel1.Size);
             _controller.EatFood += ControllerOnEatFood;
+            _controller.Grow += ControllerOnGrow;
+        }
+
+        private void ControllerOnGrow(int length)
+        {
+            label2.Text = (length-3).ToString();
         }
 
         private void ControllerOnEatFood()
         {
             snakeTimer.Interval -= 15;
-            label2.Text = $"{_controller.Snake.Length + 1}";
+            //label2.Text = (_controller.Snake.Length - 2).ToString();
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

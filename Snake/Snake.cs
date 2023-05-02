@@ -64,7 +64,8 @@ namespace Snake
 
         private bool IsValidTurn(Direction way)
         {
-            var currentWay = (Parts[0].Length > 0) ? Parts[0].Way : Parts[1].Way;
+            if (Parts[0].Length == 0) return false;
+            var currentWay = Parts[0].Way;
             if (currentWay == way) return false;
             return !((currentWay == Direction.Left && way == Direction.Right)
               || (currentWay == Direction.Right && way == Direction.Left)
