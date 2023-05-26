@@ -20,7 +20,7 @@ namespace Snake
                 for (int j = 0; j < _f.ColumnCount; j++)
                 {
                     g.FillRectangle(emptyCellBrush, GetCellRect(i, j));
-                    g.DrawRectangle(borderPen, GetCellRect(i, j));
+                    g.DrawRectangle(borderPen, Rectangle.Round(GetCellRect(i, j)));
                 }
             }
         }
