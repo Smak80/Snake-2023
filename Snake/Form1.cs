@@ -27,8 +27,11 @@ namespace Snake
         }
         private void panel1_SizeChanged(object sender, EventArgs e)
         {
-            _controller.ControllerSize = panel1.Size;
-            panel1.Invalidate();
+            if (_controller != null)
+            {
+                _controller.ControllerSize = panel1.Size;
+                panel1.Invalidate();
+            }
         }
 
         private void panel1_Click(object sender, EventArgs e)
