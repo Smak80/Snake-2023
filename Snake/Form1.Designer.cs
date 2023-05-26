@@ -60,7 +60,7 @@
             label1.Name = "label1";
             label1.Size = new Size(36, 15);
             label1.TabIndex = 1;
-            label1.Text = "Очки";
+            label1.Text = "Очки:";
             // 
             // label2
             // 
